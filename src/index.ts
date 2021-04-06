@@ -1,11 +1,20 @@
-import * as ping from "ping";
+import express from "express";
+import cors from "cors";
 
-var hosts = ["192.168.1.1", "google.com", "yahoo.com"];
-hosts.forEach(function (host) {
-  ping.sys.probe(host, function (isAlive) {
-    var msg = isAlive
-      ? "host " + host + " is alive"
-      : "host " + host + " is dead";
-    console.log(msg);
-  });
+import pingRouter from "./ping/getPing";
+
+const app = express();
+const port = 8000;
+
+app.get("/", (req, res) => {
+  res.send("hello from root");
+});
+
+app.use(cors());
+app.use(express.json());
+
+app.use("/ping", pingRouter);
+
+app.listen(port, () => {
+  console.log(`server started at http://localhost:${port}`);
 });
