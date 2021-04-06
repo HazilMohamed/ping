@@ -1,0 +1,17 @@
+{
+  "name": "ping",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:HazilMohamed/ping.git",
+  "author": "hazilMohamed <mohamedhazil14@yahoo.in>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/ping": "^0.2.0",
+    "ping": "^0.4.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  }
+}
