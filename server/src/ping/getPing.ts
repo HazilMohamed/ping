@@ -8,12 +8,14 @@ const pingMonitor = (url: string, timeOut: number, callback: Function) => {
     function (out) {
       if (out && out.time < timeOut) {
         return callback({
+          status: 200,
           success: true,
           message: "Pinged Successfully",
           ...out,
         });
       } else {
         return callback({
+          status: 200,
           success: false,
           message: out.alive ? "Exceeds given time limit" : "URL not found",
         });
@@ -21,6 +23,7 @@ const pingMonitor = (url: string, timeOut: number, callback: Function) => {
     },
     function (err) {
       return callback({
+        status: 404,
         success: false,
         message: "Something went wrong!",
         ...err,
