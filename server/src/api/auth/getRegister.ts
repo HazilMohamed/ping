@@ -39,7 +39,7 @@ registerRouter.post("/", validation, async (req, res) => {
     return res.json({
       status: 200,
       success: true,
-      message: "Login successfull",
+      message: "Login successful",
       token: jwtToken,
       userId: user.rows[0].user_id,
     });

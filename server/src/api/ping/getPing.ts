@@ -10,7 +10,7 @@ const pingMonitor = (url: string, timeOut: number, callback: Function) => {
         return callback({
           status: 200,
           success: true,
-          message: "Pinged Successfully",
+          message: "Pinged successfuly",
           ...out,
         });
       } else {
