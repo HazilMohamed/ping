@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(3),
     },
     paper: {
-      width: "900px",
+      width: "1080px",
       height: "900px",
       backgroundColor: "#a3ccf5",
     },

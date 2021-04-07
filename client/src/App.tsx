@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+
 import HomeContainer from "./containers/HomeContainer";
 import LoginContainer from "./containers/LoginContainer";
 
@@ -9,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path="/" component={HomeContainer} exact />
-        <Route path="/login" component={LoginContainer} exact />
+        <Route path="/login" component={LoginContainer} />
       </Switch>
     </BrowserRouter>
   );
