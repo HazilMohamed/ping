@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useContext, useState } from "react";
 import axios from "axios";
 import config from "../config";
+import AuthContext from "../utils/Context";
 import {
   Paper,
   createStyles,
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const LoginContainer = () => {
   const api = config.api;
   const styles = useStyles();
-  const history = useHistory();
+  const { login } = useContext(AuthContext);
   const [username, setUsername] = useState<string>();
   const [password, setPassword] = useState<string>();
 
@@ -61,7 +61,7 @@ const LoginContainer = () => {
             if (res.data.success) {
               localStorage.setItem("token", res.data.token);
               localStorage.setItem("userId", res.data.userId);
-              history.push("/");
+              login();
             } else {
               console.log(res.data.message);
             }
