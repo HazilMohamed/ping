@@ -19,7 +19,11 @@ registerRouter.post("/", validation, async (req, res) => {
     ]);
 
     if (user.rows.length > 0) {
-      return res.status(401).json("User already exist!");
+      return res.send({
+        status: 401,
+        success: false,
+        message: "User already exists",
+      });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -32,10 +36,20 @@ registerRouter.post("/", validation, async (req, res) => {
 
     const jwtToken = jwtGenerator(newUser.rows[0].user_id);
 
-    return res.json({ jwtToken });
+    return res.json({
+      status: 200,
+      success: true,
+      message: "Login successfull",
+      token: jwtToken,
+      userId: user.rows[0].user_id,
+    });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.json({
+      status: 500,
+      message: "Somthing went wrong!",
+      success: false,
+    });
   }
 });
 
