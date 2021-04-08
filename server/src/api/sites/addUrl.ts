@@ -32,6 +32,7 @@ addUrlRouter.post("/", async (req, res) => {
         status: 200,
         success: true,
         message: "Added successful",
+        data: result.rows,
       });
     }
   } catch (err) {

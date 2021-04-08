@@ -41,8 +41,8 @@ const LoginContainer = () => {
   const api = config.api;
   const styles = useStyles();
   const { login } = useContext(AuthContext);
-  const [username, setUsername] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const changeUsername = (value: string) => {
     setUsername(value);

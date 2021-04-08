@@ -33,6 +33,7 @@ updateUrlRouter.post("/", async (req, res) => {
         status: 200,
         success: true,
         message: "Updated successful",
+        data: result.rows,
       });
     }
   } catch (err) {
