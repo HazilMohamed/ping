@@ -1,5 +1,5 @@
 import * as ping from "ping";
-import express, { response } from "express";
+import express from "express";
 
 const pingRouter = express.Router();
 
@@ -16,7 +16,7 @@ const pingMonitor = (url: string, timeOut: number, callback: Function) => {
       } else {
         return callback({
           status: 200,
-          success: false,
+          success: true,
           message: out.alive ? "Exceeds given time limit" : "URL not found",
         });
       }

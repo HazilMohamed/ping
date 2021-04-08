@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      width: "60",
+      width: "60%",
       padding: theme.spacing(6),
     },
     history: {
@@ -92,14 +92,14 @@ const HomeContainer = () => {
   const fetchSite = () => {
     if (url && timeOut) {
       axios.post(api + "/ping", { url, timeOut }).then((res) => {
-        if (res.data && res.data.status) {
+        if (res.data && res.data.success) {
           setResult(res.data);
           axios
             .post(api + "/url/add", {
               userId: userId,
               url: url,
               timeOut: timeOut,
-              ping: res.data.avg,
+              ping: res.data.avg || res.data.message,
             })
             .then((res) => {
               if (res.data && res.data.success) {
@@ -109,6 +109,7 @@ const HomeContainer = () => {
             });
         }
       });
+      resetAll();
     }
   };
 
@@ -122,7 +123,7 @@ const HomeContainer = () => {
               userSiteId,
               timeOut,
               url,
-              ping: res.data.avg,
+              ping: res.data.avg || res.data.message,
             })
             .then((res) => {
               if (res.data && res.data.success) {
@@ -208,7 +209,7 @@ const HomeContainer = () => {
           <Paper className={styles.output}>
             Response: {result.message}
             <br />
-            {result.success && (
+            {result.avg && (
               <>
                 IP: {result.numeric_host}
                 <br />
