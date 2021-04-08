@@ -198,7 +198,7 @@ const HomeContainer = () => {
           color={"secondary"}
           onClick={isUpdate ? updateSite : fetchSite}
         >
-          {isUpdate ? "Update" : "Search"}
+          {isUpdate ? "Update" : "Add"}
         </Button>
         <Button variant={"contained"} onClick={resetAll}>
           Reset

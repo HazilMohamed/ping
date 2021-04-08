@@ -3,7 +3,11 @@ import express from "express";
 
 const pingRouter = express.Router();
 
-const pingMonitor = (url: string, timeOut: number, callback: Function) => {
+export const pingMonitor = (
+  url: string,
+  timeOut: number,
+  callback: Function
+) => {
   ping.promise.probe(url).then(
     function (out) {
       if (out && out.time < timeOut) {

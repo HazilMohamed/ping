@@ -12,6 +12,7 @@ CREATE TABLE userSites(
   user_id uuid,
   url VARCHAR(255) NOT NULL,
   url_timeOut VARCHAR(255) NOT NULL,
+  cron_id VARCHAR(255),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   PRIMARY KEY(usersite_id),
   CONSTRAINT fk_users
