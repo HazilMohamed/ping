@@ -24,3 +24,9 @@ Make sure postgres tables are created before starting server.
 ## Run
 
 Both clinet and server can be up using the command `yarn start`.
+
+
+## Users
+
+- Username: john, Password: 12345
+- Username: mary, Password: qwerty
