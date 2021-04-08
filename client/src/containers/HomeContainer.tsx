@@ -10,6 +10,9 @@ import {
   TextField,
   Button,
   Typography,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
 } from "@material-ui/core";
 
 import { getUserId } from "../utils/Auth";
@@ -238,8 +241,8 @@ const HomeContainer = () => {
                 </div>
               </div>
               {sites.map((site) => (
-                <div key={site.usersite_id}>
-                  <div className={styles.row}>
+                <Accordion key={site.usersite_id}>
+                  <AccordionSummary className={styles.row}>
                     <div className={styles.element}>{site.url}</div>
                     <div className={styles.element}>{site.url_timeout}</div>
                     <div className={styles.element}>
@@ -260,20 +263,27 @@ const HomeContainer = () => {
                         Delete
                       </Button>
                     </div>
-                  </div>
+                  </AccordionSummary>
                   {site.pingData && (
-                    <div className={styles.log}>
-                      {site.pingData &&
-                        site.pingData.map((ping: any) => (
-                          <div key={ping.pingdata_id}>
-                            <div
-                              className={styles.logElement}
-                            >{`${ping.updated_at} -> ${ping.ping}`}</div>
-                          </div>
-                        ))}
-                    </div>
+                    <AccordionDetails>
+                      <div className={styles.log}>
+                        {site.pingData &&
+                          site.pingData.map((ping: any) => {
+                            let iso = new Date(ping.updated_at);
+                            let date = iso.toLocaleDateString();
+                            let time = iso.toLocaleTimeString();
+                            return (
+                              <div key={ping.pingdata_id}>
+                                <div className={styles.logElement}>
+                                  {`Date: ${date} || Time: ${time} || Ping: ${ping.ping}`}
+                                </div>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    </AccordionDetails>
                   )}
-                </div>
+                </Accordion>
               ))}
             </div>
           </Paper>

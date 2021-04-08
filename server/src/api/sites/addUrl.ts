@@ -8,7 +8,7 @@ const addUrlRouter = Router();
 const startedJobs: any = {};
 
 const startJob = (url: string, timeOut: number, userSiteId: any) => {
-  let job = cron.schedule("*/1 * * * *", function () {
+  let job = cron.schedule("*/5 * * * *", function () {
     pingMonitor(url, timeOut, async function (res: any) {
       if (res && res.success) {
         try {
