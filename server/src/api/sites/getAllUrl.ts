@@ -21,11 +21,24 @@ allUrlRouter.post("/", async (req, res) => {
         message: "No previous URLs found",
       });
     } else {
+      let fetched = userSites.rows;
+      let updatedResults: Array<any> = [];
+      for (let f of fetched) {
+        const pingData = await pool.query(
+          "SELECT * FROM pingData WHERE usersite_id =$1",
+          [f.usersite_id]
+        );
+        if (pingData && pingData.rows.length > 0) {
+          f.pingData = pingData.rows;
+        }
+        updatedResults = [...updatedResults, f];
+      }
+
       return res.send({
         status: 200,
         success: true,
         message: "Queried successfuly",
-        data: userSites.rows,
+        data: updatedResults,
       });
     }
   } catch (err) {

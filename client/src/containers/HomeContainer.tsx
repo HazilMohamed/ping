@@ -60,6 +60,13 @@ const useStyles = makeStyles((theme: Theme) =>
     element: {
       width: "25%",
     },
+    log: {
+      textAlign: "left",
+      padding: theme.spacing(0, 6),
+    },
+    logElement: {
+      padding: theme.spacing(1, 0),
+    },
   })
 );
 
@@ -84,7 +91,7 @@ const HomeContainer = () => {
 
   const fetchSite = () => {
     if (url && timeOut) {
-      axios.post(api + "/ping", { url: url, timeOut: timeOut }).then((res) => {
+      axios.post(api + "/ping", { url, timeOut }).then((res) => {
         if (res.data && res.data.status) {
           setResult(res.data);
           axios
@@ -92,6 +99,7 @@ const HomeContainer = () => {
               userId: userId,
               url: url,
               timeOut: timeOut,
+              ping: res.data.avg,
             })
             .then((res) => {
               if (res.data && res.data.success) {
@@ -106,15 +114,25 @@ const HomeContainer = () => {
 
   const updateSite = () => {
     if (url && timeOut && userSiteId) {
-      axios
-        .post(api + "/url/update", { userSiteId, timeOut, url })
-        .then((res) => {
-          if (res.data && res.data.success) {
-            let array = sites;
-            array = array.filter((el) => el.usersite_id !== userSiteId);
-            setSites([...array, res.data.data[0]]);
-          }
-        });
+      axios.post(api + "/ping", { url, timeOut }).then((res) => {
+        if (res.data && res.data.status) {
+          setResult(res.data);
+          axios
+            .post(api + "/url/update", {
+              userSiteId,
+              timeOut,
+              url,
+              ping: res.data.avg,
+            })
+            .then((res) => {
+              if (res.data && res.data.success) {
+                let array = sites;
+                array = array.filter((el) => el.usersite_id !== userSiteId);
+                setSites([...array, res.data.data[0]]);
+              }
+            });
+        }
+      });
     }
   };
 
@@ -219,27 +237,41 @@ const HomeContainer = () => {
                 </div>
               </div>
               {sites.map((site) => (
-                <div key={site.usersite_id} className={styles.row}>
-                  <div className={styles.element}>{site.url}</div>
-                  <div className={styles.element}>{site.url_timeout}</div>
-                  <div className={styles.element}>
-                    <Button
-                      variant={"contained"}
-                      color={"primary"}
-                      onClick={() => handleEdit(site)}
-                    >
-                      Edit
-                    </Button>
+                <div key={site.usersite_id}>
+                  <div className={styles.row}>
+                    <div className={styles.element}>{site.url}</div>
+                    <div className={styles.element}>{site.url_timeout}</div>
+                    <div className={styles.element}>
+                      <Button
+                        variant={"contained"}
+                        color={"primary"}
+                        onClick={() => handleEdit(site)}
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                    <div className={styles.element}>
+                      <Button
+                        variant={"contained"}
+                        color={"secondary"}
+                        onClick={() => handleDelete(site.usersite_id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
                   </div>
-                  <div className={styles.element}>
-                    <Button
-                      variant={"contained"}
-                      color={"secondary"}
-                      onClick={() => handleDelete(site.usersite_id)}
-                    >
-                      Delete
-                    </Button>
-                  </div>
+                  {site.pingData && (
+                    <div className={styles.log}>
+                      {site.pingData &&
+                        site.pingData.map((ping: any) => (
+                          <div key={ping.pingdata_id}>
+                            <div
+                              className={styles.logElement}
+                            >{`${ping.updated_at} -> ${ping.ping}`}</div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

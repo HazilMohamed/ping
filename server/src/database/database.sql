@@ -19,6 +19,17 @@ CREATE TABLE userSites(
       REFERENCES users(user_id)
 );
 
+CREATE TABLE pingData(
+  pingdata_id uuid DEFAULT uuid_generate_v4(),
+  usersite_id uuid,
+  ping VARCHAR(255) NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY(pingdata_id),
+  CONSTRAINT fk_usersites
+    FOREIGN KEY(usersite_id)
+      REFERENCES userSites(usersite_id)
+);
+
 CREATE OR REPLACE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -29,5 +40,10 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON userSites
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+CREATE TRIGGER set_timestamp
+BEFORE UPDATE ON pingData
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
