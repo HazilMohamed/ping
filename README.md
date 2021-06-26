@@ -23,7 +23,7 @@ Make sure postgres tables are created before starting server.
 
 ## Run
 
-Both clinet and server can be up using the command `yarn start`.
+Both client and server can be up using the command `yarn start`.
 
 
 ## Users
