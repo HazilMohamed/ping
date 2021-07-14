@@ -1,13 +1,13 @@
-CREATE DATABASE ping;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE users(
+CREATE TABLE IF NOT EXISTS users (
   user_id uuid DEFAULT uuid_generate_v4(),
   user_name VARCHAR(255) NOT NULL,
   user_password VARCHAR(255) NOT NULL,
   PRIMARY KEY(user_id)
 );
 
-CREATE TABLE userSites(
+CREATE TABLE IF NOT EXISTS userSites(
   usersite_id uuid DEFAULT uuid_generate_v4(),
   user_id uuid,
   url VARCHAR(255) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE userSites(
       REFERENCES users(user_id)
 );
 
-CREATE TABLE pingData(
+CREATE TABLE IF NOT EXISTS pingData(
   pingdata_id uuid DEFAULT uuid_generate_v4(),
   usersite_id uuid,
   ping VARCHAR(255) NOT NULL,

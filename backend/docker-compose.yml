@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  server:
+    container_name: "pingMonitor"
+    restart: always
+    networks: 
+      - pingNet
+    ports:
+      - 8000:8000
+    links:
+      - postgresdb
+    depends_on: 
+      - postgresdb
+    build: ./server
+    volumes:
+      - ./server:/opt/server
+      - /opt/server/node_modules
+  
+  postgresdb:
+    container_name: "pingDB"
+    restart: always
+    build: ./database
+    networks:
+      - pingNet
+    ports:
+      - 1314:5432
+    volumes:
+      - ~/.projects/database/pingDB/postgres:/var/lib/postgres
+      - ./database/database_init.sql:/docker-entrypoint-initdb.d/database_init.sql
+
+networks:
+  pingNet:

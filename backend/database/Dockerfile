@@ -1,0 +1,5 @@
+FROM postgres:12.7
+
+ENV POSTGRES_USER postgres
+ENV POSTGRES_DB ping
+ENV POSTGRES_PASSWORD myPassword
